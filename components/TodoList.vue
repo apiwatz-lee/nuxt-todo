@@ -1,9 +1,5 @@
 <script setup lang="ts">
-const { todos, addTodo } = useTodo();
-
-function onTodoListCreated(title: string) {
-  addTodo(title);
-}
+const { todos } = useTodo();
 </script>
 
 <template>
@@ -24,7 +20,7 @@ function onTodoListCreated(title: string) {
 
     <div class="bg-gray-100 p-4 rounded mt-4">
       <h2 class="font-bold text-lg mb-2">Create Todo List</h2>
-      <CreateTodoList @created="onTodoListCreated" />
+      <CreateTodoList />
     </div>
   </div>
 </template>
