@@ -1,5 +1,5 @@
 <template>
-  <div>
-    <h1 class="bg-red-500">is work ?</h1>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
