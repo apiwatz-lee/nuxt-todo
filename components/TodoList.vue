@@ -4,23 +4,32 @@ const { todos } = useTodo();
 
 <template>
   <div>
-    <ul class="flex flex-col gap-2">
+    <ul class="flex flex-col gap-5">
       <li
         v-for="todo in todos"
         :key="todo.id"
-        class="border border-gray-300 p-2 rounded-md flex justify-between"
+        class="border border-gray-300 p-2 rounded-md"
       >
-        <span>{{ todo.title }}</span>
-        <div class="flex gap-1">
-          <ButtonUpdateTodoList :todo="todo" />
-          <ButtonRemoveTodoList :todo="todo" />
-        </div>
+        <header class="flex justify-between">
+          <span>{{ todo.title }}</span>
+          <div class="flex gap-1">
+            <ButtonUpdateTodoList :todo="todo" />
+            <ButtonRemoveTodoList :todo="todo" />
+          </div>
+        </header>
+        <main>
+          <TodoListItem :todo="todo" />
+        </main>
       </li>
     </ul>
 
-    <div class="bg-gray-100 p-4 rounded mt-4">
+    <div class="bg-gray-100 p-4 rounded mt-6">
       <h2 class="font-bold text-lg mb-2">Create Todo List</h2>
-      <CreateTodoList />
+      <FormCreateTodoList />
     </div>
+
+    <DevOnly>
+      <pre>{{ todos }}</pre>
+    </DevOnly>
   </div>
 </template>
