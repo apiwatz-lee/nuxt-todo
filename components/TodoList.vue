@@ -12,9 +12,18 @@ function onTodoListCreated(title: string) {
       <li
         v-for="todo in todos"
         :key="todo.id"
-        class="border border-gray-300 p-2 rounded-md"
+        class="border border-gray-300 p-2 rounded-md flex justify-between"
       >
-        {{ todo.title }}
+        <span>{{ todo.title }}</span>
+        <div class="flex gap-1">
+          <UpdateTodoList :todo="todo" />
+
+          <UButton
+            size="xs"
+            color="error"
+            >Delete</UButton
+          >
+        </div>
       </li>
     </ul>
 
