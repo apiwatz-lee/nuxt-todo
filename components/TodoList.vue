@@ -16,13 +16,8 @@ function onTodoListCreated(title: string) {
       >
         <span>{{ todo.title }}</span>
         <div class="flex gap-1">
-          <UpdateTodoList :todo="todo" />
-
-          <UButton
-            size="xs"
-            color="error"
-            >Delete</UButton
-          >
+          <ButtonUpdateTodoList :todo="todo" />
+          <ButtonRemoveTodoList :todo="todo" />
         </div>
       </li>
     </ul>
