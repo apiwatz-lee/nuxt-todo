@@ -1,7 +1,5 @@
 <template>
   <div>
-    test bot discord
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    <h1 class="bg-red-500">is work ?</h1>
   </div>
 </template>
