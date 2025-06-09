@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+// เอาไว้ config พวก runtime ต่าง ๆ
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineNuxtConfig({
