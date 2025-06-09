@@ -5,20 +5,37 @@ const props = defineProps<{
 }>();
 
 const currentTodo = getTodo(props.todo.id);
+
+function onToggleItem(id: string, value: boolean | 'indeterminate') {
+  if (value === 'indeterminate') {
+    return;
+  }
+
+  if (value) {
+    currentTodo.markItemDone(id);
+  } else {
+    currentTodo.markItemUndone(id);
+  }
+}
 </script>
 
 <template>
-  <ul>
+  <ul class="flex flex-col gap-2">
     <li
       v-for="item in currentTodo.todo.items"
       :key="item.id"
     >
-      <span>{{ item.title }}</span>
-      <span>{{ item.done ? '✅' : '❌' }}</span>
+      <UCheckbox
+        :model-value="item.done"
+        :label="item.title"
+        @update:model-value="onToggleItem(item.id, $event)"
+      >
+        <template #label>
+          <span :class="{ 'line-through text-gray-400': item.done }">{{
+            item.title
+          }}</span>
+        </template>
+      </UCheckbox>
     </li>
   </ul>
-
-  <div class="mt-4">
-    <FormCreateTodoListItem :todo-id="currentTodo.todo.id" />
-  </div>
 </template>
