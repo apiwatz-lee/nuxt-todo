@@ -16,7 +16,7 @@ let todos: Ref<TodoList[]>;
 
 export function useTodo() {
   //Singleton pattern
-  //ป้องกันการ render ซ้ำ หลายๆ รอบ
+  //ทำให้ todos และ watch ถูกสร้างครั้งเดียว ป้องกันปัญหา render ซ้ำ
   if (!todos) {
     todos = useState<TodoList[]>('todos', () => []);
     watch(
@@ -24,7 +24,6 @@ export function useTodo() {
       (newTodos) => {
         const data = JSON.stringify(newTodos);
         localStorage.setItem('todo', data);
-        console.log('render');
       },
       { deep: true }
     );
