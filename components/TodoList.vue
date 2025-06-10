@@ -1,8 +1,12 @@
 <script setup lang="ts">
-const { todos, updateTodoTitle } = useTodo();
+const { todos, updateTodoTitle, removeTodo } = useTodo();
 
 function onTodoUpdated(id: string, newTitle: string) {
   updateTodoTitle(id, newTitle);
+}
+
+function onDeleteConfirm(id: string) {
+  removeTodo(id);
 }
 </script>
 
@@ -21,7 +25,7 @@ function onTodoUpdated(id: string, newTitle: string) {
         <header class="flex justify-between">
           <span>{{ todo.title }}</span>
           <div class="flex gap-1">
-            <ButtonUpdateModal
+            <ModalUpdateTitle
               header-title="Update title"
               :previous-title="todo.title"
               placeholder="Enter a new title"
@@ -32,8 +36,20 @@ function onTodoUpdated(id: string, newTitle: string) {
                 color="secondary"
                 >Update Title
               </UButton>
-            </ButtonUpdateModal>
-            <ButtonRemoveTodoList :todo="todo" />
+            </ModalUpdateTitle>
+            <ModalConfirm
+              :todo="todo"
+              title=" Are you Sure to delete this in your todo list?"
+              :description="`Todo: ${todo.title}`"
+              confirm-color="error"
+              @confirm="onDeleteConfirm(todo.id)"
+            >
+              <UButton
+                color="error"
+                size="xs"
+                >Delete</UButton
+              >
+            </ModalConfirm>
           </div>
         </header>
 

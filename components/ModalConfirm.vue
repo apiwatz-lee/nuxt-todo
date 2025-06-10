@@ -1,35 +1,47 @@
 <script setup lang="ts">
-const { removeTodo } = useTodo();
+const emit = defineEmits<{
+  confirm: [];
+}>();
+
 const props = defineProps<{
-  todo: TodoList;
+  title: string;
+  description?: string;
+  confirmColor?:
+    | 'Primary'
+    | 'neutral'
+    | 'secondary'
+    | 'success'
+    | 'info'
+    | 'warning'
+    | 'error';
 }>();
 
 const open = ref(false);
+
+function onConfirm() {
+  emit('confirm');
+  open.value = false;
+}
 </script>
 
 <template>
   <UModal
     v-model:open="open"
-    title="Are you sure to delete this todo list"
     :ui="{ content: 'max-w-sm' }"
   >
-    <UButton
-      color="error"
-      size="xs"
-      >Delete</UButton
-    >
+    <slot />
     <template #content>
       <div class="p-4">
         <h2 class="font-bold mb-1">
-          Are you Sure to delete this in your todo list?
+          {{ title }}
         </h2>
 
-        <p class="mb-3">Todo: "{{ props.todo.title }}"</p>
+        <p v-if="description">{{ description }}</p>
 
         <div class="flex justify-end gap-2">
           <UButton
-            color="error"
-            @click="removeTodo(props.todo.id)"
+            :color="confirmColor"
+            @click="onConfirm()"
             >Confirm</UButton
           >
           <UButton

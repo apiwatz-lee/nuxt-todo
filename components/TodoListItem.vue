@@ -21,6 +21,10 @@ function onToggleItem(id: string, value: boolean | 'indeterminate') {
 function onTodoItemUpdated(id: string, newTitle: string) {
   currentTodo.updateItemTitle(id, newTitle);
 }
+
+function onDeleteConfirm(id: string) {
+  currentTodo.removeItem(id);
+}
 </script>
 
 <template>
@@ -41,7 +45,7 @@ function onTodoItemUpdated(id: string, newTitle: string) {
             }}</span>
           </template>
         </UCheckbox>
-        <ButtonUpdateModal
+        <ModalUpdateTitle
           header-title="Update title item"
           :previous-title="item.title"
           placeholder="Enter a new title item"
@@ -52,13 +56,21 @@ function onTodoItemUpdated(id: string, newTitle: string) {
             class="cursor-pointer text-blue-600"
             size="1.2em"
           ></Icon>
-        </ButtonUpdateModal>
+        </ModalUpdateTitle>
 
-        <Icon
-          name="material-symbols:delete-forever"
-          class="cursor-pointer text-red-600"
-          size="1.2em"
-        ></Icon>
+        <ModalConfirm
+          :todo="todo"
+          title=" Are you Sure to delete this in your todo list item?"
+          :description="`Item: ${item.title}`"
+          confirm-color="error"
+          @confirm="onDeleteConfirm(item.id)"
+        >
+          <Icon
+            name="material-symbols:delete-forever"
+            class="cursor-pointer text-red-600"
+            size="1.2em"
+          ></Icon>
+        </ModalConfirm>
       </div>
     </li>
   </ul>
