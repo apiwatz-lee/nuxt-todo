@@ -12,8 +12,23 @@ export interface TodoList {
   items: TodoListItem[];
 }
 
+let todos: Ref<TodoList[]>;
+
 export function useTodo() {
-  const todos = useState<TodoList[]>('todos', () => []);
+  //Singleton pattern
+  //ป้องกันการ render ซ้ำ หลายๆ รอบ
+  if (!todos) {
+    todos = useState<TodoList[]>('todos', () => []);
+    watch(
+      todos,
+      (newTodos) => {
+        const data = JSON.stringify(newTodos);
+        localStorage.setItem('todo', data);
+        console.log('render');
+      },
+      { deep: true }
+    );
+  }
 
   function addTodo(title: string) {
     todos.value.push({
@@ -21,6 +36,13 @@ export function useTodo() {
       title,
       items: [],
     });
+  }
+
+  function loadTodoFromLocalStorage() {
+    const data = localStorage.getItem('todo');
+    if (data) {
+      todos.value = JSON.parse(data);
+    }
   }
 
   function updateTodoTitle(id: string, newTitle: string) {
@@ -91,5 +113,6 @@ export function useTodo() {
     updateTodoTitle,
     removeTodo,
     getTodo,
+    loadTodoFromLocalStorage,
   };
 }
