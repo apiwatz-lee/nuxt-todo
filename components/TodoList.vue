@@ -1,10 +1,17 @@
 <script setup lang="ts">
-const { todos } = useTodo();
+const { todos, updateTodoTitle } = useTodo();
+
+function onTodoUpdated(id: string, newTitle: string) {
+  updateTodoTitle(id, newTitle);
+}
 </script>
 
 <template>
   <div>
-    <ul class="flex flex-col gap-5">
+    <ul
+      v-if="todos.length > 0"
+      class="flex flex-col gap-5"
+    >
       <li
         v-for="todo in todos"
         :key="todo.id"
@@ -14,7 +21,18 @@ const { todos } = useTodo();
         <header class="flex justify-between">
           <span>{{ todo.title }}</span>
           <div class="flex gap-1">
-            <ButtonUpdateTodoList :todo="todo" />
+            <ButtonUpdateModal
+              header-title="Update title"
+              :previous-title="todo.title"
+              placeholder="Enter a new title"
+              @updated="onTodoUpdated(todo.id, $event)"
+            >
+              <UButton
+                size="xs"
+                color="secondary"
+                >Update Title
+              </UButton>
+            </ButtonUpdateModal>
             <ButtonRemoveTodoList :todo="todo" />
           </div>
         </header>
@@ -30,14 +48,12 @@ const { todos } = useTodo();
       </li>
     </ul>
 
+    <p v-else>No todo found</p>
+
     <!-- Form create list main-->
     <div class="bg-gray-100 p-4 rounded mt-6">
       <h2 class="font-bold text-lg mb-2">Create Todo List</h2>
       <FormCreateTodoList />
     </div>
-
-    <DevOnly>
-      <pre>{{ todos }}</pre>
-    </DevOnly>
   </div>
 </template>
