@@ -5,6 +5,11 @@ if (import.meta.client) {
     loadTodoFromLocalStorage();
   });
 }
+
+await callOnce(async () => {
+  const { getCurrentUser } = useUser();
+  await getCurrentUser();
+});
 </script>
 
 <template>

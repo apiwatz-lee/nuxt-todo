@@ -4,22 +4,26 @@ const input = ref({
   password: '',
 });
 
+const { login } = useUser();
+
 const toast = useToast();
 
 async function onLogin() {
-  const { data, error } = await authClient.signIn.email({ ...input.value });
+  try {
+    const data = await login(input.value.email, input.value.password);
+    toast.add({
+      title: `Login successfull on email ${data.user.email}`,
+      color: 'success',
+    });
 
-  if (error) {
-    toast.add({ title: error.message || 'Unknown error', color: 'error' });
+    await navigateTo('/');
+  } catch (error) {
+    toast.add({
+      title: (error as Error)?.message || 'Unknown error',
+      color: 'error',
+    });
     return;
   }
-
-  toast.add({
-    title: `Login successfull on email ${data.user.email}`,
-    color: 'success',
-  });
-
-  await navigateTo('/');
 }
 </script>
 
