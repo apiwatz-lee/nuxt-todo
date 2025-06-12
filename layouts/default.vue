@@ -2,13 +2,21 @@
   <div class="p-3 text-gray-700">
     <nav>
       <div class="max-w-md mx-auto bg-gray-100 p-2 rounded-md shadow">
-        <ul class="flex justify-between">
+        <ul class="flex">
           <li>
             <NuxtLink
               class="font-bold text-lg text-blue-600 underline"
               to="/"
             >
               Todo List
+            </NuxtLink>
+          </li>
+          <li class="ml-auto mr-3">
+            <NuxtLink
+              class="text-blue underline"
+              to="/login"
+            >
+              Log in
             </NuxtLink>
           </li>
           <li>

@@ -1,14 +1,13 @@
 <script setup lang="ts">
 const input = ref({
-  name: '',
   email: '',
   password: '',
 });
 
 const toast = useToast();
 
-async function onSignUp() {
-  const { data, error } = await authClient.signUp.email({ ...input.value });
+async function onLogin() {
+  const { data, error } = await authClient.signIn.email({ ...input.value });
 
   if (error) {
     toast.add({ title: error.message || 'Unknown error', color: 'error' });
@@ -16,28 +15,19 @@ async function onSignUp() {
   }
 
   toast.add({
-    title: `Sign up successfull! You can now login with ${data.user.email}`,
+    title: `Login successfull on email ${data.user.email}`,
     color: 'success',
   });
 
-  await navigateTo('/login');
+  await navigateTo('/');
 }
 </script>
 
 <template>
   <div class="max-w-xs mx-auto">
-    <h1 class="font-bold text-center text-2xl mb-4">Sign Up</h1>
-    <form @submit.prevent="onSignUp()">
+    <h1 class="font-bold text-center text-2xl mb-4">Log in</h1>
+    <form @submit.prevent="onLogin()">
       <div class="flex flex-col gap-2">
-        <UFormField label="Fullname">
-          <UInput
-            v-model="input.name"
-            placeholder="Fullname"
-            class="w-full"
-            name="fullname"
-          ></UInput>
-        </UFormField>
-
         <UFormField label="email">
           <UInput
             v-model="input.email"
